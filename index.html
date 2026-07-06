@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dinners">
+<title>Dinners — week of 2026-07-06</title>
+<style>
+:root{
+  --bg:#faf7f2; --card:#ffffff; --ink:#2b2620; --sub:#8a8072; --line:#e8e1d5;
+  --accent:#c2571b; --accent-soft:#fbeadd; --good:#3d8a4e; --check:#b9b0a1;
+  --shadow:0 1px 3px rgba(60,45,20,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#191613; --card:#242019; --ink:#ece5d8; --sub:#9a9081; --line:#3a332a;
+  --accent:#e8813f; --accent-soft:#3a2a1c; --good:#6cbf7d; --check:#5c554a; --shadow:0 1px 3px rgba(0,0,0,.3); }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+  font:17px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased}
+body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+header.app{padding:calc(14px + env(safe-area-inset-top)) 18px 10px;}
+header.app h1{font-size:22px;margin:0 0 2px;font-weight:700}
+header.app .stats{color:var(--sub);font-size:13.5px}
+.wrap{max-width:680px;margin:0 auto;padding:0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+/* ---- tabs ---- */
+nav.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);z-index:10}
+nav.tabs button{flex:1;border:0;background:none;color:var(--sub);font:600 12px/1 inherit;
+  padding:10px 0 8px;cursor:pointer}
+nav.tabs button .ico{display:block;font-size:22px;margin-bottom:3px}
+nav.tabs button.on{color:var(--accent)}
+/* ---- shop ---- */
+.progress{height:6px;background:var(--line);border-radius:3px;margin:10px 0 16px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--good);border-radius:3px;transition:width .25s}
+h2.cat{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);margin:20px 4px 8px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;-webkit-user-select:none}
+.item:last-child{border-bottom:0}
+.box{flex:0 0 26px;height:26px;border:2px solid var(--check);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;transition:all .15s}
+.item.done .box{background:var(--good);border-color:var(--good)}
+.item .txt{flex:1;min-width:0}
+.item .nm{font-weight:600}
+.item .qt{color:var(--sub);font-size:14px}
+.item.done .nm,.item.done .qt{text-decoration:line-through;color:var(--check)}
+.item .rcp{flex:0 0 auto;color:var(--sub);font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.staples{color:var(--sub);font-size:13.5px;margin:16px 4px 8px}
+.reset{display:block;margin:22px auto 8px;border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:999px;padding:8px 18px;font:600 14px inherit;cursor:pointer}
+/* ---- cook list ---- */
+.rcard{display:flex;gap:14px;padding:12px;cursor:pointer;align-items:center;margin-bottom:12px}
+.rcard img{width:86px;height:86px;object-fit:cover;border-radius:10px;flex:0 0 86px;background:var(--line)}
+.rcard .noimg{width:86px;height:86px;border-radius:10px;flex:0 0 86px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:34px}
+.rcard h3{margin:0 0 4px;font-size:17px}
+.rcard .meta{color:var(--sub);font-size:13px}
+.rcard .badges{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;background:var(--accent-soft);color:var(--accent)}
+.badge.ck{background:transparent;border:1.5px solid var(--line);color:var(--sub)}
+.rcard.cooked{opacity:.55}
+.rcard.cooked h3{text-decoration:line-through}
+/* ---- recipe detail ---- */
+.back{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 4px 8px;display:flex;align-items:center;gap:8px}
+.back button{border:0;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font:600 15px inherit;color:var(--accent);cursor:pointer}
+.hero{width:100%;height:210px;object-fit:cover;border-radius:14px;background:var(--line)}
+.detail h1{font-size:24px;margin:14px 2px 6px}
+.detail .meta{color:var(--sub);font-size:14px;margin:0 2px 12px}
+.banner{background:var(--accent-soft);color:var(--accent);border-radius:12px;padding:11px 14px;font-size:14.5px;font-weight:600;margin-bottom:16px}
+.banner small{display:block;font-weight:400;margin-top:3px;opacity:.85}
+h2.sec{font-size:18px;margin:22px 2px 10px}
+.ing{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;-webkit-user-select:none}
+.ing:last-child{border-bottom:0}
+.ing .box{flex:0 0 22px;height:22px;border-radius:6px;font-size:13px}
+.ing.done{opacity:.5}.ing.done .txt{text-decoration:line-through}
+.ing b{font-weight:700}
+.ing .note{color:var(--sub);font-size:13px}
+.step{display:flex;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;-webkit-user-select:none}
+.step:last-child{border-bottom:0}
+.step .n{flex:0 0 28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.step.done{opacity:.45}.step.done .t{text-decoration:line-through}
+.step .sec-name{font-weight:700;display:block;margin-bottom:2px}
+.notes{color:var(--sub);font-size:14.5px;white-space:pre-wrap;padding:2px 4px}
+.srclink{display:block;text-align:center;margin:20px 0 8px;color:var(--accent);font-weight:600;text-decoration:none;font-size:15px}
+.cookedbtn{display:block;width:100%;margin:18px 0 6px;border:0;border-radius:12px;padding:14px;font:700 16px inherit;cursor:pointer;background:var(--good);color:#fff}
+.cookedbtn.un{background:var(--card);color:var(--sub);border:1px solid var(--line)}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div id="app" class="wrap"></div>
+<nav class="tabs" id="tabs">
+  <button data-v="shop"><span class="ico">🛒</span>Shop</button>
+  <button data-v="cook"><span class="ico">🍳</span>Cook</button>
+</nav>
+<script>
+const DATA = {"date":"2026-07-06","seed":202628,"summary":{"perishItems":6,"perRecipePerish":11,"avgProtein":47,"estCost":"38.60+"},"grocery":[{"name":"chicken breast","class":"protein","label":"Protein","qty":"6","recipes":[4,5]},{"name":"eggs","class":"protein","label":"Protein","qty":"2.5 + 0.2 large","recipes":[1,2,3,5]},{"name":"ground turkey","class":"protein","label":"Protein","qty":"110 g","recipes":[2]},{"name":"ham","class":"protein","label":"Protein","qty":"4 slices","recipes":[4]},{"name":"parsley","class":"produce","label":"Produce","qty":"1 Tbsp","recipes":[5]},{"name":"spinach","class":"produce","label":"Produce","qty":"340 g","recipes":[1,3]},{"name":"butter","class":"dairy","label":"Dairy & chilled","qty":"0.4 Tbsp + 0.75 cup","recipes":[2,4]},{"name":"milk","class":"dairy","label":"Dairy & chilled","qty":"0.75 cup","recipes":[4]},{"name":"mozzarella","class":"dairy","label":"Dairy & chilled","qty":"2.37 cup","recipes":[1,3,5]},{"name":"parmesan","class":"dairy","label":"Dairy & chilled","qty":"0.14 cup","recipes":[3]},{"name":"parmesan cheese","class":"dairy","label":"Dairy & chilled","qty":"0.33 cup","recipes":[5]},{"name":"ricotta","class":"dairy","label":"Dairy & chilled","qty":"580 g","recipes":[1,3]},{"name":"swiss cheese","class":"dairy","label":"Dairy & chilled","qty":"4 slices","recipes":[4]},{"name":"all purpose flour","class":"pantry","label":"Pantry","qty":"2 Tbsp + 0.5 cup","recipes":[4,5]},{"name":"basil pesto","class":"pantry","label":"Pantry","qty":"0.4 cup","recipes":[1]},{"name":"breadcrumbs","class":"pantry","label":"Pantry","qty":"1 cup","recipes":[5]},{"name":"dijon mustard","class":"pantry","label":"Pantry","qty":"0.5 Tbsp","recipes":[4]},{"name":"garlic powder","class":"pantry","label":"Pantry","qty":"1.5 tsp","recipes":[4,5]},{"name":"italian seasoning","class":"pantry","label":"Pantry","qty":"1.5 tsp","recipes":[4,5]},{"name":"jumbo pasta shells","class":"pantry","label":"Pantry","qty":"180 g","recipes":[1]},{"name":"lasagna noodles","class":"pantry","label":"Pantry","qty":"260 g","recipes":[3]},{"name":"marinara sauce","class":"pantry","label":"Pantry","qty":"1.93 cup","recipes":[3,5]},{"name":"non stick spray","class":"pantry","label":"Pantry","qty":"some","recipes":[3]},{"name":"onion powder","class":"pantry","label":"Pantry","qty":"0.5 tsp","recipes":[4]},{"name":"panko breadcrumbs","class":"pantry","label":"Pantry","qty":"1.5 cup","recipes":[4]},{"name":"pasta sauce","class":"pantry","label":"Pantry","qty":"540 g","recipes":[1]},{"name":"stuffing mix","class":"pantry","label":"Pantry","qty":"0.2 6oz. box","recipes":[2]},{"name":"worcestershire","class":"pantry","label":"Pantry","qty":"1 tsp","recipes":[4]}],"recipes":[{"n":1,"id":33901,"url":"https://www.budgetbytes.com/pesto-stuffed-shells/","title":"Pesto Stuffed Shells","cuisine":"American","primary":"egg","totalTime":60,"rating":4.78,"proteinPerServe":29,"scale":0.8,"servings":5,"image":"https://www.budgetbytes.com/wp-content/uploads/2010/03/Pour-Pasta-Sauce-Over-Pesto-Stuffed-Shells.jpg","prep":15,"cook":45,"calories":522,"batch":"0.8×","ingredients":[{"qty":"180 g","name":"frozen spinach, thawed","note":""},{"qty":"340 g","name":"ricotta","note":""},{"qty":"0.8 cup","name":"shredded mozzarella","note":""},{"qty":"⅜ cup","name":"basil pesto","note":""},{"qty":"0.8","name":"large egg","note":""},{"qty":"180 g","name":"jumbo pasta shells (about 22-25 shells)","note":""},{"qty":"540 g","name":"pasta sauce","note":""}],"steps":[{"section":"","text":"Make sure the spinach is completely thawed, then squeeze out as much of the moisture as possible. Add the spinach to a large bowl with the ricotta, mozzarella, pesto, and egg. Stir until the ingredients are well combined, then refrigerate until it's ready to be used."},{"section":"","text":"Bring a large pot of water to a boil, then add the jumbo shells. Cook the shells just until they're tender, making sure not to over cook the pasta. The longer the shells boil, the more likely they are to tear during the stuffing process. Drain the shells in a colander and then rinse briefly with cool water to make them cool enough to handle."},{"section":"","text":"Preheat the oven to 350ºF. Spread about 1 cup of pasta sauce in the bottom of a large casserole dish."},{"section":"","text":"One by one, stuff each shell with a couple tablespoons of the cheese, pesto, and spinach mixture. Place the shells in the casserole dish as you stuff them."},{"section":"","text":"Once the shells are all stuffed, pour the remaining two cups of pasta sauce over top. Bake the shells for about 30 minutes in the preheated oven, or until the sauce is bubbling up around the edges. Serve hot."}],"notes":""},{"n":2,"id":40155,"url":"https://www.budgetbytes.com/turkey-and-stuffing-meatballs/","title":"Turkey and Stuffing Meatballs","cuisine":"American","primary":"turkey","totalTime":40,"rating":4.82,"proteinPerServe":40,"scale":0.2,"servings":20,"image":"https://www.budgetbytes.com/wp-content/uploads/2018/11/Turkey-and-Stuffing-Meatballs-appetizer-spread.jpg","prep":10,"cook":30,"calories":77,"batch":"0.2×","ingredients":[{"qty":"0.2 6oz. box","name":"stuffing mix","note":""},{"qty":"0.2 cup","name":"hot water*","note":""},{"qty":"110 g","name":"ground turkey (93% lean)","note":""},{"qty":"0.2 large","name":"egg, lightly beaten","note":""},{"qty":"⅜ Tbsp","name":"butter","note":""}],"steps":[{"section":"","text":"Preheat the oven to 400ºF. Place the dry stuffing mix in a large bowl, add the hot water, and stir until no more water pools on the bottom of the bowl. Let the stuffing sit for another 5 minutes to further soften. (Less water is added to the stuffing mix than is listed on the box in order to leave room for the absorption of moisture from the turkey and egg.)"},{"section":"","text":"Add the ground turkey and beaten egg to the bowl with the partially hydrated stuffing mix. Combine these ingredients by hand until they are evenly mixed. Form the mixture into 20 meatballs, slightly larger than ping pong balls, or about 3 Tbsp each."},{"section":"","text":"Line a baking sheet with parchment paper, then place the meatballs on the parchment. Bake the meatballs for 20 minutes in the preheated oven."},{"section":"","text":"Melt 1 Tbsp butter in a large skillet over medium heat. Add half of the baked meatballs and allow them to cook in the butter until browned on most sides (about 5 minutes). Transfer the browned meatballs to a serving dish, add a second tablespoon of butter to the skillet, and repeat with the second batch of meatballs."},{"section":"","text":"Serve warm over a bed of mashed potatoes or with gravy or cranberry sauce for dipping."}],"notes":"*If your stuffing mix calls for chicken broth instead of water in the cooking instructions, use chicken broth for the meatballs as well."},{"n":3,"id":33321,"url":"https://www.budgetbytes.com/?post_type=wprm_recipe&p=33321","title":"Spinach Lasagna Roll Ups","cuisine":"American","primary":"egg","totalTime":60,"rating":4.25,"proteinPerServe":57,"scale":0.57,"servings":7,"image":"https://www.budgetbytes.com/wp-content/uploads/2011/01/Spinach20Roll20Ups20close.jpg","prep":15,"cook":45,"calories":629,"batch":"0.57×","ingredients":[{"qty":"260 g","name":"lasagna noodles","note":""},{"qty":"240 g","name":"ricotta","note":""},{"qty":"0.57 cup","name":"mozzarella, shredded","note":""},{"qty":"⅛ cup","name":"grated Parmesan","note":""},{"qty":"0.57","name":"large egg","note":""},{"qty":"160 g","name":"frozen spinach","note":""},{"qty":"1.42 cup","name":"marinara sauce","note":""},{"qty":"","name":"salt and pepper to taste","note":""},{"qty":"","name":"non-stick spray, as needed","note":""}],"steps":[{"section":"","text":"Get a large pot of water boiling with a dash of salt. When it comes to a full boil, add the lasagna noodles and cook until al dente (soft but not soggy… about 12-15 minutes). When they are finished cooking, drain in a colander."},{"section":"","text":"While the noodles are boiling, prepare the filling. Thaw the package of frozen spinach in the microwave and then squeeze out as much excess liquid as possible. Combine the spinach in a bowl with the ricotta, mozzarella, parmesan, egg, freshly grated pepper and about 1/4 tsp of salt. Mix until well combined."},{"section":"","text":"When the noodles and filling are ready to go, preheat the oven to 400ºF. Prepare a glass casserole dish by spraying with non-stick spray."},{"section":"","text":"On a clean surface, lay out a few noodles at a time. Place a few tablespoons of filling on each noodle and spread to cover from edge to edge. The filling does not need to be thick because once the noodle is rolled up, it will be compounded. Make sure to spread it all the way to the edges of the noodles."},{"section":"","text":"Roll the noodles up and place in the prepared casserole dish. Repeat until all of your filling is gone (there may be some noodles left over, these are “back ups” in case any of the others rip during assembly). Pour the marinara sauce over the rolled noodles making sure to cover all surfaces. The sauce will keep the noodles hydrated and soft while baking."},{"section":"","text":"Cover the dish in foil and bake for 30 minutes in the preheated 400ºF oven. Serve hot or divide into individual portions and refrigerate."}],"notes":""},{"n":4,"id":89928,"url":"https://www.budgetbytes.com/chicken-cordon-bleu/","title":"Chicken Cordon Bleu","cuisine":"French","primary":"chicken","totalTime":55,"rating":5,"proteinPerServe":69,"scale":1,"servings":4,"image":"https://www.budgetbytes.com/wp-content/uploads/2024/01/chicken-cordon-bleu-plated2-WR.jpg","prep":20,"cook":35,"calories":889,"batch":"1×","ingredients":[{"qty":"4","name":"large boneless skinless chicken breasts","note":""},{"qty":"4 slices","name":"ham","note":""},{"qty":"4 slices","name":"Swiss cheese","note":""},{"qty":"1 ½ cup","name":"Panko breadcrumbs","note":""},{"qty":"½ tsp","name":"Italian seasoning","note":""},{"qty":"½ tsp","name":"onion powder","note":""},{"qty":"½ tsp","name":"garlic powder","note":""},{"qty":"1 tsp","name":"salt","note":""},{"qty":"¼ tsp","name":"Freshly cracked black pepper","note":""},{"qty":"½ cup","name":"butter, melted","note":""},{"qty":"¼ cup","name":"butter","note":""},{"qty":"2 Tbsp","name":"all-purpose flour","note":""},{"qty":"¾ cup","name":"milk","note":""},{"qty":"½ Tbsp","name":"Dijon mustard","note":""},{"qty":"1 tsp","name":"Worcestershire","note":""},{"qty":"½ tsp","name":"salt","note":""}],"steps":[{"section":"Preheat","text":"Preheat the oven to 350°F."},{"section":"Butterfly","text":"Butterfly each chicken breast by slicing horizontally through the middle of the breast, taking care to not cut all the way through. Open the chicken breast up like a book."},{"section":"Pound","text":"Lay the breast flat between 2 pieces of plastic wrap. Use a meat mallet or rolling pin to pound the chicken breasts into a thin, even layer."},{"section":"Sprinkle","text":"Sprinkle the chicken breasts with salt and pepper. Place a slice of ham and slice of Swiss cheese on each chicken breast."},{"section":"Roll","text":"Gently roll up the chicken breast."},{"section":"Combine","text":"In a shallow bowl, combine the breadcrumbs, Italian seasoning, onion powder, garlic, powder, salt, and pepper. Set up a breading station with 2 shallow bowls; one of melted butter and one for the breading."},{"section":"Dip","text":"Dip the chicken rolls in the melted butter, and roll in the breadcrumbs until completely coated. Transfer to a parchment linked baking sheet."},{"section":"Bake","text":"Bake the chicken for 35-40 minutes or until it reaches an internal temperature of 165°F."},{"section":"Melt","text":"To make the sauce, melt the butter in a saucepan over medium heat. Stir in the flour. Then, slowly pour in the milk while whisking to incorporate."},{"section":"Spoon","text":"Add in the Dijon mustard and Worcestershire sauce. Season with salt. Spoon the sauce over the chicken."}],"notes":""},{"n":5,"id":93109,"url":"https://www.budgetbytes.com/chicken-parmesan/","title":"Chicken Parmesan","cuisine":"Italian","primary":"chicken","totalTime":22,"rating":4.42,"proteinPerServe":41,"scale":1,"servings":4,"image":"https://www.budgetbytes.com/wp-content/uploads/2024/04/Chicken-Parmesan-Overhead.jpg","prep":10,"cook":12,"calories":570,"batch":"1×","ingredients":[{"qty":"2","name":"boneless, skinless chicken breast (about 1.5 lbs)","note":""},{"qty":"1 cup","name":"breadcrumbs","note":""},{"qty":"⅓ cup","name":"grated parmesan cheese","note":""},{"qty":"1 tsp","name":"garlic powder","note":""},{"qty":"1 tsp","name":"Italian seasoning","note":""},{"qty":"1 tsp","name":"salt","note":""},{"qty":"","name":"Freshly cracked pepper","note":""},{"qty":"1","name":"egg","note":""},{"qty":"½ cup","name":"all-purpose flour","note":""},{"qty":"¼ cup","name":"cooking oil","note":""},{"qty":"½ cup","name":"marinara sauce","note":""},{"qty":"1 cup","name":"shredded mozzarella","note":""},{"qty":"1 Tbsp","name":"chopped fresh parsley, optional","note":""}],"steps":[{"section":"Filet","text":"Use a sharp knife to carefully filet the chicken breasts lengthwise into two cutlets, making 4 cutlets total. You can also use pre-cut chicken cutlets."},{"section":"Season","text":"Lightly season both sides of the chicken with a pinch of salt and pepper, Italian seasoning, and garlic powder."},{"section":"Combine","text":"In a wide shallow bowl or container, combine the bread crumbs, parmesan, garlic powder, Italian seasoning, salt, and some freshly cracked pepper."},{"section":"Whisk","text":"In a separate wide shallow bowl or container, whisk the egg until smooth."},{"section":"Add","text":"In a third shallow bowl, add the flour."},{"section":"Dredge","text":"Dredge each piece of chicken into the flour, dusting off any excess. Then, dip in the egg mixture, making sure to fully coat the chicken and dripping off any excess. Finally, dip the chicken in the seasoned bread crumbs, again coating well on both sides."},{"section":"Cook","text":"Heat the cooking oil in a large skillet over medium-high heat. When the skillet and oil are very hot, add the chicken and cook on the first side until golden brown, about 5 minutes."},{"section":"Flip","text":"Flip the chicken and turn the heat down to medium. Top each cutlet with 2 tbsp of marinara sauce and ¼ cup shredded mozzarella cheese. Place a lid on the skillet to allow the cheese to fully melt, the marinara sauce to warm up, and the chicken to cook all the way through, about 5-7 more minutes."},{"section":"Serve","text":"Top the chicken with fresh chopped parsley (optional) and serve with spaghetti and additional marinara."}],"notes":""}]};
+const KEY = 'bbweek-' + DATA.date;
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e) { state = {}; }
+state.shop = state.shop || {}; state.ing = state.ing || {}; state.step = state.step || {}; state.cooked = state.cooked || {};
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+let view = state.view || 'shop';
+let openRecipe = null;
+
+const $ = (s, el) => (el||document).querySelector(s);
+const app = $('#app');
+const CATS = [...new Set(DATA.grocery.map(g => g.label))];
+
+function render(){
+  document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.v === view && openRecipe === null || b.dataset.v==='cook' && openRecipe!==null));
+  if (openRecipe !== null) return renderRecipe(openRecipe);
+  state.view = view; save();
+  if (view === 'shop') renderShop(); else renderCookList();
+  window.scrollTo(0, scrollMem[view] || 0);
+}
+const scrollMem = {};
+
+function header(){
+  const s = DATA.summary;
+  return '<header class="app"><h1>Dinners</h1><div class="stats">Week of ' + DATA.date +
+    ' · ' + DATA.recipes.length + ' dinners · 4 serves each · avg ' + s.avgProtein + ' g protein/serve' +
+    (s.estCost ? ' · ~US$' + s.estCost : '') + '</div></header>';
+}
+
+function renderShop(){
+  const total = DATA.grocery.length;
+  const done = DATA.grocery.filter((g,i) => state.shop[i]).length;
+  let h = header();
+  h += '<div class="progress"><i style="width:' + (total ? Math.round(done/total*100) : 0) + '%"></i></div>';
+  h += '<div style="color:var(--sub);font-size:14px;margin:-8px 4px 4px">' + done + ' of ' + total + ' items</div>';
+  for (const cat of CATS){
+    const rows = DATA.grocery.map((g,i)=>({g,i})).filter(x => x.g.label === cat);
+    if (!rows.length) continue;
+    h += '<h2 class="cat">' + cat + '</h2><div class="card">';
+    for (const {g,i} of rows){
+      h += '<div class="item' + (state.shop[i] ? ' done' : '') + '" data-shop="' + i + '">' +
+        '<div class="box">' + (state.shop[i] ? '✓' : '') + '</div>' +
+        '<div class="txt"><div class="nm">' + escp(g.name) + '</div><div class="qt">' + escp(g.qty) + '</div></div>' +
+        '<div class="rcp">' + g.recipes.map(n => '#'+n).join(' ') + '</div></div>';
+    }
+    h += '</div>';
+  }
+  h += '<div class="staples">Assumed staples (not listed): salt, pepper, water, cooking/olive oil. #n tags = which dinners use the item.</div>';
+  h += '<button class="reset" data-reset="shop">Clear all checkmarks</button>';
+  app.innerHTML = h;
+}
+
+function renderCookList(){
+  let h = header();
+  h += '<div style="height:8px"></div>';
+  DATA.recipes.forEach((r, ri) => {
+    const cooked = state.cooked[ri];
+    h += '<div class="card rcard' + (cooked ? ' cooked' : '') + '" data-open="' + ri + '">' +
+      (r.image ? '<img loading="lazy" src="' + escp(r.image) + '" onerror="this.outerHTML=\'<div class=noimg>🍽</div>\'">' : '<div class="noimg">🍽</div>') +
+      '<div><h3>' + r.n + '. ' + escp(r.title) + '</h3>' +
+      '<div class="meta">' + [r.cuisine, r.totalTime ? r.totalTime + ' min' : null, r.rating ? '★' + r.rating : null].filter(Boolean).join(' · ') + '</div>' +
+      '<div class="badges"><span class="badge">' + escp(r.batch) + ' batch</span>' +
+      (r.proteinPerServe ? '<span class="badge">' + r.proteinPerServe + ' g protein</span>' : '') +
+      (cooked ? '<span class="badge ck">cooked ✓</span>' : '') +
+      '</div></div></div>';
+  });
+  app.innerHTML = h;
+}
+
+function renderRecipe(ri){
+  const r = DATA.recipes[ri];
+  const ingDone = i => state.ing[ri + '-' + i];
+  const stDone = i => state.step[ri + '-' + i];
+  let h = '<div class="back"><button data-back="1">‹ Back</button></div><div class="detail">';
+  if (r.image) h += '<img class="hero" loading="lazy" src="' + escp(r.image) + '" onerror="this.remove()">';
+  h += '<h1>' + escp(r.title) + '</h1>';
+  h += '<div class="meta">' + [r.cuisine,
+      (r.prep ? 'prep ' + r.prep + ' min' : null), (r.cook ? 'cook ' + r.cook + ' min' : null),
+      (r.rating ? '★' + r.rating : null), (r.proteinPerServe ? r.proteinPerServe + ' g protein/serve' : null),
+      (r.calories ? r.calories + ' kcal/serve' : null)
+    ].filter(Boolean).join(' · ') + '</div>';
+  h += '<div class="banner">Make a ' + escp(r.batch) + ' batch — the ingredient amounts below are already scaled to 4 serves.' +
+    '<small>Step text may mention the original (' + r.servings + '-serve) quantities — trust the list below.</small></div>';
+  h += '<h2 class="sec">Ingredients</h2><div class="card">';
+  r.ingredients.forEach((ing, i) => {
+    h += '<div class="ing' + (ingDone(i) ? ' done' : '') + '" data-ing="' + i + '">' +
+      '<div class="box">' + (ingDone(i) ? '✓' : '') + '</div>' +
+      '<div class="txt"><b>' + escp(ing.qty) + '</b> ' + escp(ing.name) +
+      (ing.note ? ' <span class="note">(' + escp(ing.note) + ')</span>' : '') + '</div></div>';
+  });
+  h += '</div><h2 class="sec">Steps</h2><div class="card">';
+  r.steps.forEach((s, i) => {
+    h += '<div class="step' + (stDone(i) ? ' done' : '') + '" data-step="' + i + '">' +
+      '<div class="n">' + (i + 1) + '</div><div class="t">' +
+      (s.section ? '<span class="sec-name">' + escp(s.section) + '</span>' : '') + escp(s.text) + '</div></div>';
+  });
+  h += '</div>';
+  if (r.notes) h += '<h2 class="sec">Notes</h2><div class="notes">' + escp(r.notes) + '</div>';
+  h += '<button class="cookedbtn' + (state.cooked[ri] ? ' un' : '') + '" data-cooked="1">' +
+    (state.cooked[ri] ? 'Cooked ✓ — tap to unmark' : 'Mark as cooked') + '</button>';
+  h += '<a class="srclink" href="' + escp(r.url) + '" target="_blank" rel="noopener">View original on Budget Bytes ↗</a>';
+  h += '</div>';
+  app.innerHTML = h;
+  window.scrollTo(0, 0);
+}
+
+function escp(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+app.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-shop],[data-open],[data-back],[data-ing],[data-step],[data-cooked],[data-reset]');
+  if (!t) return;
+  if (t.dataset.shop != null){ const i = t.dataset.shop; state.shop[i] = !state.shop[i]; save(); const y = window.scrollY; renderShop(); window.scrollTo(0, y); }
+  else if (t.dataset.open != null){ scrollMem[view] = window.scrollY; openRecipe = Number(t.dataset.open); render(); }
+  else if (t.dataset.back){ openRecipe = null; render(); }
+  else if (t.dataset.ing != null){ const k = openRecipe + '-' + t.dataset.ing; state.ing[k] = !state.ing[k]; save(); const y = window.scrollY; renderRecipe(openRecipe); window.scrollTo(0, y); }
+  else if (t.dataset.step != null){ const k = openRecipe + '-' + t.dataset.step; state.step[k] = !state.step[k]; save(); const y = window.scrollY; renderRecipe(openRecipe); window.scrollTo(0, y); }
+  else if (t.dataset.cooked){ state.cooked[openRecipe] = !state.cooked[openRecipe]; save(); const y = window.scrollY; renderRecipe(openRecipe); window.scrollTo(0, y); }
+  else if (t.dataset.reset){ state.shop = {}; save(); renderShop(); }
+});
+document.getElementById('tabs').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  scrollMem[view] = openRecipe === null ? window.scrollY : scrollMem[view];
+  openRecipe = null; view = b.dataset.v; render();
+});
+render();
+</script>
+</body>
+</html>
